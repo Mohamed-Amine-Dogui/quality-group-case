@@ -46,3 +46,8 @@ acl-074bf0b5e782d629b
 
 
 public ip : 3.122.180.46
+
+
+subnet-04580d1a8986b23d4 1a
+subnet-032f05d2bf79cae47 1b
+subnet-02bfc67ae6cbaf5c2 1c

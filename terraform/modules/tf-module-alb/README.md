@@ -1,23 +1,29 @@
+Here's the updated `README.md` for your **ALB module**, now including the `name` variable to customize the ALB name:
+
+---
+
 ## ALB Module for AWS
 
 ### Current Usage
 
-> [IMPORTANT] This module supports multi-environment deployment (`dev`, `int`, `prd`) and integrates tagging best practices for governance and cost management.
-This version leverages the `stage` variable to manage resources across multiple environments and supports optional activation via the `enable` toggle.
+> [IMPORTANT] This module supports multi-environment deployment (`dev`, `int`, `prd`) and integrates tagging best practices for governance and cost control.
 
-The ALB can be configured with multiple listeners and target groups. It supports routing traffic to EC2, Lambda, or IP-based targets, and allows dynamic listener/target group mapping.
+This module provisions an **Application Load Balancer** with support for **multiple listeners** and **multiple target groups**, customizable **health checks**, and compatibility with **EC2**, **Lambda**, and other target types.
+
+The module uses `stage`, `project`, and `tags` to organize deployments and can be toggled on/off with the `enable` flag. It also allows assigning a custom name to the ALB using the `name` variable.
 
 ---
 
 ### Features
 
-- Create **Application Load Balancer** (ALB) in a specified VPC
-- Support for multiple **listeners** (HTTP/HTTPS/Custom Ports)
-- Attach multiple **target groups** with custom settings
-- Support **health checks** per target group
-- Optional tagging with project/stage metadata
-- Conditional resource creation using `enable`
-- Flexible backend type: EC2, Lambda, or IP
+- Creates an Application Load Balancer (ALB)
+- Supports **multiple listeners** on different ports (e.g. 80, 443)
+- Supports **multiple target groups** (EC2, Lambda, or IP)
+- Customizable **health check paths**
+- Assign a custom ALB name
+- Fully tagged resources using `tags` map
+- Outputs ALB DNS, ARNs, and related identifiers
+- Controlled deployment with the `enable` toggle
 
 ---
 
@@ -27,39 +33,32 @@ The ALB can be configured with multiple listeners and target groups. It supports
 module "alb" {
   source  = "./modules/tf-module-alb"
   enable  = true
-  name    = "app-alb"
+  name    = "web-alb"
   vpc_id  = var.vpc_id
-  subnets = var.public_subnets
+  subnet_ids = var.public_subnets
   security_group_ids = [aws_security_group.alb_sg.id]
 
   listeners = [
     {
-      port            = 80
-      protocol        = "HTTP"
-      default_action  = {
-        type             = "forward"
-        target_group_key = "web_tg"
-      }
+      port               = 80
+      protocol           = "HTTP"
+      target_group_index = 0
     },
     {
-      port            = 443
-      protocol        = "HTTPS"
-      certificate_arn = var.acm_certificate_arn
-      default_action  = {
-        type             = "forward"
-        target_group_key = "web_tg"
-      }
+      port               = 443
+      protocol           = "HTTPS"
+      target_group_index = 0
     }
   ]
 
   target_groups = [
     {
-      key                = "web_tg"
-      target_type        = "instance"
-      port               = 80
-      protocol           = "HTTP"
-      health_check_path  = "/"
-      target_ids         = [module.ec2.instance_id]
+      name_prefix       = "web"
+      port              = 80
+      protocol          = "HTTP"
+      target_type       = "instance"
+      health_check_path = "/"
+      vpc_id            = var.vpc_id
     }
   ]
 
@@ -75,33 +74,33 @@ module "alb" {
 
 ### Inputs
 
-| Name              | Description                                                       | Type             | Default  | Required |
-|-------------------|-------------------------------------------------------------------|------------------|----------|:--------:|
-| enable            | Toggle to enable/disable resource creation                        | `bool`           | `true`   | no       |
-| name              | Name of the ALB                                                  | `string`         | n/a      | yes      |
-| vpc_id            | VPC ID in which to create the ALB                                | `string`         | n/a      | yes      |
-| subnet_ids        | List of subnet IDs for ALB                                       | `list(string)`   | n/a      | yes      |
-| security_groups   | List of security group IDs for ALB                               | `list(string)`   | `[]`     | no       |
-| listeners         | List of listeners with `port` and `protocol`                     | `list(object)`   | n/a      | yes      |
-| target_groups     | List of target groups and their settings                         | `list(object)`   | `[]`     | no       |
-| tags              | Tags to attach to ALB and resources                              | `map(string)`    | `{}`     | no       |
+| Name                | Description                                                    | Type            | Default     | Required |
+|---------------------|----------------------------------------------------------------|------------------|-------------|:--------:|
+| enable              | Toggle to enable/disable ALB creation                          | `bool`           | `true`      | no       |
+| name                | Name to assign to the ALB                                      | `string`         | n/a         | yes      |
+| vpc_id              | VPC ID to deploy the ALB into                                  | `string`         | n/a         | yes      |
+| subnet_ids          | List of subnets (must be public) for ALB                       | `list(string)`   | n/a         | yes      |
+| security_group_ids  | Security Groups to associate with the ALB                      | `list(string)`   | `[]`        | no       |
+| listeners           | List of listener objects with `port`, `protocol`, `target_group_index` | `list(object)` | n/a | yes      |
+| target_groups       | List of target group objects                                   | `list(object)`   | n/a         | yes      |
+| tags                | Tags to apply to all resources                                 | `map(string)`    | `{}`        | no       |
 
 ---
 
 ### Outputs
 
-| Name          | Description                          |
-|---------------|--------------------------------------|
-| alb_arn       | ARN of the ALB                       |
-| alb_dns_name  | DNS name to access the ALB           |
-| alb_name      | Name of the ALB                      |
-| listener_arns | List of listener ARNs                |
-| tg_arns       | Map of target group names to ARNs    |
+| Name               | Description                                |
+|--------------------|--------------------------------------------|
+| alb_arn            | ARN of the created ALB                     |
+| alb_dns_name       | DNS name of the ALB                        |
+| target_group_arns  | List of target group ARNs                  |
+| listener_arns      | List of ALB listener ARNs                  |
 
 ---
 
 ### Notes
-- The ALB must be placed in public subnets to be accessible from the internet.
-- Health check paths are customizable per target group.
-- Listener rules and advanced routing are extendable if needed.
-- Supports integration with EC2, Lambda, or IP-based targets via `target_type`.
+
+- For **HTTPS**, a valid `certificate_arn` is required. Currently, the module assumes certificate configuration is handled outside.
+- This module supports EC2 (`instance`), Lambda (`lambda`), and IP-based (`ip`) targets.
+- Health check path defaults to `/` but can be overridden per target group.
+- You can extend this module with listener rules for advanced routing logic.

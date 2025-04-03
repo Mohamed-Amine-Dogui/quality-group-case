@@ -5,6 +5,11 @@ variable "enable" {
   description = "Set to false to prevent the module from creating any resources"
 }
 
+variable "name" {
+  description = "Name to assign to the ALB"
+  type        = string
+}
+
 variable "vpc_id" {
   description = "VPC where the ALB will be created"
   type        = string

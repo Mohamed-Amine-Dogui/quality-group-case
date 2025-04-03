@@ -40,12 +40,21 @@ variable "vpc_id" {
   description = "ID of default vpc"
   default     = "vpc-0e8471e886fad17c5"
 }
-variable "subnet_id" {
+
+variable "subnet_1a_id" {
+  description = "The id of the subnet  "
+  default     = "subnet-04580d1a8986b23d4"
+}
+
+variable "subnet_1b_id" {
   description = "The id of the subnet  "
   default     = "subnet-032f05d2bf79cae47"
 }
 
-
+variable "subnet_1c_id" {
+  description = "The id of the subnet  "
+  default     = "subnet-02bfc67ae6cbaf5c2"
+}
 
 
 
