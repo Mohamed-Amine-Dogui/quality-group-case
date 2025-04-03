@@ -42,3 +42,30 @@ variable "user_data" {
   type        = string
   default     = ""
 }
+
+variable "project" {
+  description = "Project identifier"
+  type        = string
+}
+
+variable "stage" {
+  description = "Deployment stage (e.g., dev, prd)"
+  type        = string
+}
+
+variable "git_repository" {
+  description = "Git repo for tagging purposes"
+  type        = string
+}
+
+variable "resource_group" {
+  description = "Resource group name, e.g. 'ec2'"
+  type        = string
+  default     = "ec2"
+}
+
+variable "additional_tags" {
+  description = "Additional tags to merge"
+  type        = map(string)
+  default     = {}
+}

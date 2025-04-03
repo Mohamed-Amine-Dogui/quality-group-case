@@ -5,10 +5,6 @@ variable "enable" {
   description = "Set to false to prevent the module from creating any resources"
 }
 
-variable "name" {
-  description = "Name to assign to the ALB"
-  type        = string
-}
 
 variable "vpc_id" {
   description = "VPC where the ALB will be created"
@@ -53,3 +49,33 @@ variable "tags" {
   default     = {}
 }
 
+variable "project" {
+  type        = string
+  description = "Project name or abbreviation"
+}
+
+variable "stage" {
+  type        = string
+  description = "Environment stage (e.g. dev, int, prd)"
+}
+
+variable "name" {
+  type        = string
+  description = "Base name for the ALB module"
+}
+
+variable "resource_group" {
+  type        = string
+  description = "Resource group for logical tagging (e.g. alb)"
+}
+
+variable "git_repository" {
+  type        = string
+  description = "Link to Git repository"
+}
+
+variable "additional_tags" {
+  type        = map(string)
+  default     = {}
+  description = "Additional tags to merge"
+}

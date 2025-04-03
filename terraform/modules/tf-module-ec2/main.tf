@@ -1,3 +1,15 @@
+module "label" {
+  source          = "../tf-module-label"
+  project         = var.project
+  stage           = var.stage
+  name            = var.name
+  resource_group  = var.resource_group
+  git_repository  = var.git_repository
+  additional_tags = var.additional_tags
+  resources       = ["ssm-role", "ssm-profile", "ec2"]
+}
+
+
 resource "aws_instance" "this" {
   count                  = var.enable ? 1 : 0
   ami                    = data.aws_ami.amazon_linux.id
@@ -15,7 +27,7 @@ resource "aws_instance" "this" {
   }
 
   tags = merge(
-    var.tags,
+    module.label.resource["ec2"].tags,
     {
       Name = var.name
     }
@@ -24,9 +36,9 @@ resource "aws_instance" "this" {
 
 resource "aws_iam_role" "ssm_role" {
   count = var.enable ? 1 : 0
-  name  = "ec2-ssm-role"
+  name  = module.label.resource["ssm-role"].id
 
-  assume_role_policy = jsonencode({
+assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {
@@ -39,7 +51,7 @@ resource "aws_iam_role" "ssm_role" {
     ]
   })
 
-  tags = var.tags
+  tags  = module.label.resource["ssm-role"].tags
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_attach" {
@@ -50,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "ssm_attach" {
 
 resource "aws_iam_instance_profile" "ssm_profile" {
   count = var.enable ? 1 : 0
-  name  = "ec2-ssm-profile"
+  name  = module.label.resource["ssm-profile"].id
   role  = aws_iam_role.ssm_role[0].name
 }
 

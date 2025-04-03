@@ -35,7 +35,7 @@ module "ec2-1a" {
 module "ec2-1b" {
   source             = "./modules/tf-module-ec2"
   enable             = true
-  name               = "web-1a"
+  name               = "web-1b"
   vpc_id             = var.vpc_id
   subnet_id          = var.subnet_1b_id
   instance_type      = "t2.micro"
