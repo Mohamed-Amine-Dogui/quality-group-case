@@ -66,8 +66,10 @@ variable "name" {
 
 variable "resource_group" {
   type        = string
-  description = "Resource group for logical tagging (e.g. alb)"
+  default     = ""
+  description = "Logical group name for the resource (e.g., 'alb', 'ec2'). Optional."
 }
+
 
 variable "git_repository" {
   type        = string

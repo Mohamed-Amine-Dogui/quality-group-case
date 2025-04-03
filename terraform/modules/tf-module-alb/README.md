@@ -54,7 +54,7 @@ module "alb" {
   resource_group  = "alb"
   git_repository  = var.git_repository
   additional_tags = {
-    Owner = "you@example.com"
+    Owner = "douggui.med.amine@gmail.com"
   }
 }
 ```

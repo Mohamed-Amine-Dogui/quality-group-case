@@ -61,7 +61,7 @@ variable "git_repository" {
 variable "resource_group" {
   description = "Resource group name, e.g. 'ec2'"
   type        = string
-  default     = "ec2"
+  default     = ""
 }
 
 variable "additional_tags" {
