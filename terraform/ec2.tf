@@ -25,10 +25,13 @@ module "ec2-1a" {
                             echo "<p><strong>Public IP:</strong> $PUBLIC_IP</p>" >> /usr/share/nginx/html/index.html
                             EOF
 
-  tags = {
-    Project     = var.project
-    Stage       = var.stage
-    Environment = var.stage
+  project        = var.project
+  stage          = var.stage
+  resource_group = "ec2"
+  git_repository = var.git_repository
+  additional_tags = {
+    Owner  = "douggui.med.amine@gmail.com"
+    Module = "tf-module-ec2"
   }
 }
 
@@ -58,11 +61,13 @@ module "ec2-1b" {
                             echo "<p><strong>Subnet ID:</strong> $SUBNET_ID</p>" >> /usr/share/nginx/html/index.html
                             echo "<p><strong>Public IP:</strong> $PUBLIC_IP</p>" >> /usr/share/nginx/html/index.html
                             EOF
-
-  tags = {
-    Project     = var.project
-    Stage       = var.stage
-    Environment = var.stage
+  project            = var.project
+  stage              = var.stage
+  resource_group     = "ec2"
+  git_repository     = var.git_repository
+  additional_tags = {
+    Owner  = "douggui.med.amine@gmail.com"
+    Module = "tf-module-ec2"
   }
 }
 
