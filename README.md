@@ -54,3 +54,5 @@ subnet-02bfc67ae6cbaf5c2 1c
 
 terraform apply | tee apply.log
 
+(esn) mdogui@DE-CND22146LC:~/projects/quality-group-case/lambdas/my_lambda/src$ python -m uvicorn main:app --reload
+
