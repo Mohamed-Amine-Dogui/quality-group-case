@@ -13,7 +13,7 @@ installDependenciesLambda(){
     LAMBDA_NAME=${1}
     ROOT_DIR=${2}
     CLEANUP=${3:-true}
-    PYTHON_VERSION=${4:-"3.9"}
+    PYTHON_VERSION=${4:-"3.11"}
 
 
     # Creation of variables for every needed directory level in the project.

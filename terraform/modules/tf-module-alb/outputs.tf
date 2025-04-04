@@ -8,12 +8,12 @@ output "alb_arn" {
   value       = aws_lb.this[0].arn
 }
 
-output "target_group_arns" {
-  description = "List of target group ARNs"
-  value       = [for tg in aws_lb_target_group.this : tg.arn]
-}
-
 output "listener_arns" {
   description = "List of listener ARNs"
   value       = [for l in aws_lb_listener.this : l.arn]
+}
+
+output "target_group_arns" {
+  description = "List of all target group ARNs"
+  value       = try(local.target_group_arns, [])
 }

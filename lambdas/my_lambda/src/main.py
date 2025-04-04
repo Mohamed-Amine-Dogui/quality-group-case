@@ -1,40 +1,25 @@
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse, JSONResponse
+from mangum import Mangum
 import os
-import json
-import logging
-import boto3
-import time
 
-# Initialize structured logger
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
+if os.environ.get("AWS_EXECUTION_ENV", "").startswith("AWS_Lambda"):
+    from mangum.lifespan import LifespanOff
+    app.router.lifespan_context = LifespanOff()
 
-# Optional: add log format if needed
-if not logger.handlers:
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter("[%(levelname)s] %(asctime)s - %(message)s")
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
 
-def lambda_handler(event, context):
-    aws_region = os.getenv("REGION")
-    function_name = context.function_name if context else "UnknownFunction"
+app = FastAPI()
 
-    print(f"Lambda function '{function_name}' triggered in region {aws_region}")
-    logger.info(f"Lambda function '{function_name}' triggered in region {aws_region}")
+# Serve HTML (assuming it's embedded in your package or inline)
+@app.get("/", response_class=HTMLResponse)
+async def get_form():
+    with open("index.html", "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read(), status_code=200)
 
-    # Log the full incoming event
-    logger.info(f"Received event: {json.dumps(event)}")
-    print("Event received:", json.dumps(event))
+# Handle form submission
+@app.post("/index")
+async def handle_form(username: str = Form(...), password: str = Form(...)):
+    return JSONResponse(content={"username": username, "password": password})
 
-    # Dummy processing
-    time.sleep(0.5)
-    logger.info("Processing done.")
-    print("Lambda completed successfully.")
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "Hello from Lambda!",
-            "region": aws_region
-        })
-    }
+# Create Lambda handler
+handler = Mangum(app)
