@@ -27,7 +27,7 @@ installDependenciesLambda(){
         cd ${LAMBDA_DIR} && rm -rf ${LAMBDA_NAME}_env && rm -rf ${LAMBDA_NAME}
 
         # Cleanup any previous code
-        cd ${SRC_DIR} && find . | grep -v "lambda.py" | grep -v "main.py" | grep -v "lambda_modules" | grep -v "config.ini" | grep -v "libsnappy.so.1" | xargs rm -rf || echo finished cleaning src directory
+        cd ${SRC_DIR} && find . | grep -v "lambda.py" | grep -v "main.py" | grep -v "index.html" | grep -v "lambda_modules" | grep -v "config.ini" | grep -v "libsnappy.so.1" | xargs rm -rf || echo finished cleaning src directory
 
         # Adding python dependencies to target (from virtual environment)
         PYTHON3_PATH=`which python${PYTHON_VERSION}`

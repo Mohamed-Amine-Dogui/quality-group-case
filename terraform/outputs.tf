@@ -7,3 +7,8 @@ output "aws_lambda_function_arn" {
   description = "Lambda function ARN from my_lambda module"
   value       = module.my_lambda.aws_lambda_function_arn
 }
+
+output "alb_url" {
+  description = "Full URL of the ALB"
+  value       = "http://${module.alb_lambda.dns_name}"
+}

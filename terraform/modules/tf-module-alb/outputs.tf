@@ -17,3 +17,7 @@ output "target_group_arns" {
   description = "List of all target group ARNs"
   value       = try(local.target_group_arns, [])
 }
+
+output "dns_name" {
+  value = aws_lb.this[0].dns_name
+}
