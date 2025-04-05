@@ -1,58 +1,35 @@
-### Installing and Configuring Terraform v1.5.2 with tfenv
+export AWS_PROFILE=qg_case_user
+aws s3 cp my_stack.tfstate s3://esn-dev-source-terraform-state-bucket/incoming/my_stack.tfstate
+
+# Terraform Challenge – The Quality Group
+
+## Zielsetzung
+
+Diese Lösung erfüllt die Anforderung, Terraform-States automatisch zu bereinigen:  
+Sobald ein `.tfstate`-File unter einem bestimmten Prefix in einem Quell-S3-Bucket hochgeladen wird, reagiert eine AWS Lambda-Funktion darauf. Die Funktion entfernt sensible `resources`-Informationen und legt eine bereinigte Version mit lediglich den `outputs` im Ziel-Prefix eines (anderen) Buckets ab. Diese bereinigte Datei bleibt vollständig kompatibel mit Terraform als Remote-Backend.
+
+---
+
+## Projektstruktur
 
 ```bash
-# Clone tfenv
-git clone https://github.com/tfutils/tfenv.git ~/.tfenv
-
-# Add tfenv to your PATH
-echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
-
-# Verify tfenv is available
-which tfenv
-# Should return: /home/your-user/.tfenv/bin/tfenv
-
-# Install Terraform v1.5.2
-tfenv install 1.5.2
-# Output should confirm successful installation
-
-# Set Terraform 1.5.2 as the default version
-tfenv use 1.5.2
-
-
-# (Optional) Pin version to this project
-echo "1.5.2" > ~/projects/quality-group-case/.terraform-version
-```
-
-export AWS_PROFILE=qg_case_user
-
-vpc_id = vpc-0e8471e886fad17c5
-cidr = 172.31.0.0/16
-subnet :
-subnet-032f05d2bf79cae47
-172.31.32.0/20
-rtb-0b0b7372d5cbd6f63
-acl-074bf0b5e782d629b
-
-subnet-04580d1a8986b23d4
-172.31.16.0/20
-rtb-0b0b7372d5cbd6f63
-acl-074bf0b5e782d629b
-
-subnet-02bfc67ae6cbaf5c2
-172.31.0.0/20
-rtb-0b0b7372d5cbd6f63
-acl-074bf0b5e782d629b
-
-
-public ip : 3.122.180.46
-
-
-subnet-04580d1a8986b23d4 1a
-subnet-032f05d2bf79cae47 1b
-subnet-02bfc67ae6cbaf5c2 1c
-
-terraform apply | tee apply.log
-
-(esn) mdogui@DE-CND22146LC:~/projects/quality-group-case/lambdas/my_lambda/src$ python -m uvicorn main:app --reload
-
+quality-group-case/
+├── lambdas/
+│   └── my_lambda/
+│       ├── build.sh
+│       └── src/
+│           └── main.py       # Lambda logic: strip resources
+├── terraform/
+│   ├── modules/
+│   │   ├── tf-module-label
+│   │   ├── tf-module-aws-lambda
+│   │   ├── tf-module-aws-s3-bucket
+│   │   └── tf-module-aws-kms-key
+│   ├── kms.tf                # KMS key
+│   ├── my_lambda.tf          # Lambda module call
+│   ├── s3.tf                 # S3 buckets
+│   ├── main.tf               # Root composition
+│   ├── outputs.tf
+│   ├── variables.tf
+│   ├── my_stack.tfstate      # Dummy test tfstate file
+│   └── README.md             # ← You are here

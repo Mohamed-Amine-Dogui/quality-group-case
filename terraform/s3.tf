@@ -4,7 +4,7 @@
 module "logs_bucket" {
   #checkov:skip=CKV_TF_1:Skip reason
   enable = true
-  source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-s3-bucket//s3/s3-encrypted?ref=tags/0.0.1"
+  source = "./modules/tf-module-aws-s3-bucket//s3/s3-encrypted"
 
   environment                       = var.stage
   project                           = var.project
@@ -88,8 +88,8 @@ data "aws_iam_policy_document" "log_bucket_policy_document" {
 ###   Bucket for Lambda scripts
 ########################################################################################################################
 module "lambda_scripts_bucket" {
-  source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-s3-bucket//s3/s3-logging-encrypted?ref=tags/0.0.1"
-
+  #source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-s3-bucket//s3/s3-logging-encrypted?ref=tags/0.0.1"
+  source = "./modules/tf-module-aws-s3-bucket//s3/s3-logging-encrypted"
   enable                        = true
   environment                   = var.stage
   project                       = var.project
@@ -103,6 +103,38 @@ module "lambda_scripts_bucket" {
 
 }
 
+########################################################################################################################
+###   source-terraform-state Bucket
+########################################################################################################################
+module "source_terraform_state_bucket" {
+  #source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-s3-bucket//s3/s3-logging-encrypted?ref=tags/0.0.1"
+  source = "./modules/tf-module-aws-s3-bucket//s3/s3-logging-encrypted"
+  enable                        = true
+  environment                   = var.stage
+  project                       = var.project
+  s3_bucket_name                = "source-terraform-state-bucket"
+  s3_bucket_acl                 = "private"
+  target_bucket_id              = module.logs_bucket.s3_bucket
+  versioning_enabled            = true
+  enforce_SSL_encryption_policy = true
+  force_destroy                 = local.in_development
+  git_repository                = var.git_repository
+}
 
-
-
+########################################################################################################################
+###   target-terraform-state Bucket
+########################################################################################################################
+module "target_terraform_state_bucket" {
+  #source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-s3-bucket//s3/s3-logging-encrypted?ref=tags/0.0.1"
+  source = "./modules/tf-module-aws-s3-bucket//s3/s3-logging-encrypted"
+  enable                        = true
+  environment                   = var.stage
+  project                       = var.project
+  s3_bucket_name                = "target-terraform-state-bucket"
+  s3_bucket_acl                 = "private"
+  target_bucket_id              = module.logs_bucket.s3_bucket
+  versioning_enabled            = true
+  enforce_SSL_encryption_policy = true
+  force_destroy                 = local.in_development
+  git_repository                = var.git_repository
+}

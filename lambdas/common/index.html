@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>esn bietet Sport Supplement made in Gernmany</title>
+    <link rel="stylesheet" href="static/style.css">
+
+    <style>
+        :root {
+            --primary-green: #3ca163;
+            --secondary: #013b0f;
+            --title-green: #0f6e34;
+            --thirdary: #b2e96a;
+            --primary-orange: #da9500;
+            --secondary-orange:#e05c04;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+
+        body {
+            overflow-x: hidden;
+            background-color: #f7faf7 !important;
+        }
+
+
+        /* Font style*/
+
+        h3 {
+            font-family: 'Lobster', sans-serif;
+            color: #0f6e34 !important;
+          }
+
+
+
+        /* Ensure the body and html take the full height of the viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        /* Flex container for the page */
+        .container-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Make sure the container takes up the full viewport height */
+        }
+
+
+
+        .background-container {
+            height: 300px;
+            width: 100%;
+        }
+
+        .bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.9) opacity(0.9);
+        }
+
+        /* Logo Styles */
+        #logo-img {
+            position: absolute;
+            top: 1%;
+            left: 10%;
+            height: 80px;
+            width: auto;
+            z-index: 1000;
+        }
+
+        @media (max-width: 760px) {
+            #logo-img {
+                left: 85%;
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Navbar Styles */
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #012c0c !important; /* Green background for navbar */
+            width: 100%;
+        }
+
+        .custom-navbar-content {
+            padding-left: 10%;
+            padding-right: 10%;
+        }
+
+        @media (max-width: 992px) {
+            .custom-navbar-content {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .custom-navbar-content {
+                padding-left: 2%;
+                padding-right: 2%;
+            }
+        }
+
+        /* Navbar Link Styles */
+        .custom-navbar .nav-link:hover {
+            color: #b2e96a; /* Yellow link hover color */
+        }
+
+        .nav-link.active {
+            font-weight: bold;
+            color: #f7fff5; /* White for the active link */
+        }
+
+        /* Hover Effect */
+        .hover-effect {
+            transition: all 0.3s ease-in-out;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .hover-effect:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        /* Container */
+        .container {
+            padding-right: 20px;
+            padding-left: 20px;
+            max-width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+        }
+
+        /* DataTable Pagination */
+        .paginate_button a {
+            color: green !important;
+        }
+
+        .paginate_button.current a {
+            background-color: green !important;
+            color: white !important;
+        }
+
+        .paginate_button a:hover {
+            background-color: #228B22 !important;
+            color: white !important;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #013301 !important;
+            border-color: #013301 !important;
+            color: white !important;
+        }
+
+        /* Scroll to Top Button */
+
+        #up-button {
+            position: fixed;
+            display: none;
+            right: 10px;
+            bottom: 20px;
+            z-index: 200;
+            background-color: #014712;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        #up-button:hover {
+            background-color: #b2e96a;
+        }
+
+
+        .footer .btn-square {
+            margin-right: 10px; /* Adds space between buttons */
+        }
+
+        #newsletter_input {
+            color: white; /* Set placeholder text color to white */
+            opacity: 1; /* Ensure the placeholder is fully visible */
+        }
+
+        h4 {
+            font-family: "Fugaz One", sans-serif;
+            font-weight: 40;
+            font-style: normal;
+          }
+
+
+
+          h5 {
+            font-family: "DM Serif Display", serif;
+            font-weight: 40;
+            font-style: italic;
+          }
+
+        /* Quick links styling */
+        .quick-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .quick-links li {
+            margin-bottom: 10px; /* Space between each link */
+        }
+
+        .quick-links a {
+            text-decoration: none;
+            color: #a7ab97; /* Your desired color for the links */
+            font-size: 16px;
+            display: block; /* Ensure links take full width and stack vertically */
+            line-height: 1.6; /* Adjust spacing between lines */
+        }
+
+        .quick-links a:hover {
+            text-decoration: none;
+            color: var(--primary-green); /* Change color on hover */
+        }
+
+        .quick-links i {
+            color: var(--primary-green); /* Icon color */
+            margin-right: 8px; /* Add space between icon and text */
+        }
+
+        /* Section: About Us */
+        .about-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Custom margin for the about section */
+        .about-content {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+
+        /* Styling for section titles */
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        .section-title p {
+            color: var(--primary);
+            font-style: italic;
+            font-size: 16px;
+        }
+
+        /* Customize buttons in the About section */
+        .btn-custom {
+            background-color: var(--primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-custom:hover {
+            background-color: var(--secondary);
+            color: #fff;
+        }
+
+        /* Footer styling */
+        .footer {
+            background-color: var(--dark);
+            color: #b0b9ae;
+            padding: 50px 0;
+        }
+
+        .footer a {
+            color: #b0b9ae;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+
+        .footer h4 {
+            color: var(--primary);
+        }
+
+        /* Mobile view adjustments */
+        @media (max-width: 768px) {
+            .about-content {
+                margin-top: 30px;
+                margin-bottom: 30px;
+            }
+
+            .about-section-title {
+                font-size: 2rem;
+            }
+
+            .about-images img {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        /* Custom styling for buttons in the index page */
+        .btn-primary-index {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn-primary-index:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* Custom border for sections */
+        .custom-section-border {
+            border-top: 2px solid var(--primary);
+            margin: 20px 0;
+        }
+
+        /* Newsletter styling */
+        .newsletter-signup input {
+            border-radius: 50px;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+        }
+
+        .newsletter-signup button {
+            background-color: var(--primary);
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
+
+        .newsletter-signup button:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Custom list item styling in the footer */
+        .footer .btn.btn-link::before {
+            content: "\f105";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+
+        .footer .btn.btn-link:hover {
+            color: var(--light);
+        }
+
+        /* Footer business hours */
+        .footer .business-hours h6 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Scroll to top button */
+        .back-to-top {
+            position: fixed;
+            display: none;
+            right: 30px;
+            bottom: 30px;
+            z-index: 99;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-size: 18px;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--secondary);
+        }
+
+
+        /* Custom styles for titles and paragraphs in the carousel */
+        #id_carousel h5 {
+            font-size: 3rem;
+            margin-top: 3rem; /* mt-5 equivalent */
+        }
+
+        #id_carousel p {
+            font-size: 1.5rem;
+            margin-top: 1rem; /* mt-2 equivalent */
+        }
+
+        /* Media Queries for smaller screens */
+        @media (max-width: 768px) {
+            #id_carousel h5 {
+                font-size: 1.75rem; /* Smaller headline for mobile */
+                margin-top: 1.5rem;
+            }
+            #id_carousel p {
+                font-size: 1rem; /* Smaller paragraph for mobile */
+                margin-top: 0.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            #id_carousel h5 {
+                font-size: 1.25rem; /* Further adjust headline for very small screens */
+            }
+            #id_carousel p {
+                font-size: 0.9rem; /* Smaller paragraph text */
+            }
+        }
+        .separator-line {
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid #ccc; /* Adjust thickness and color */
+            width: 70%;
+        }
+
+        h4 {
+            margin-top: auto; /* Push the heading to the bottom */
+        }
+
+
+        #register-form {
+            display: none;
+        }
+        /* Custom button style for green color */
+        .btn-custom-green {
+            background-color: #3ca163 !important;
+            border-color: #3ca163 !important;
+            color: #fff !important;
+            padding: 10px 20px; /* Add padding to make sure it looks good */
+            font-size: 16px; /* Ensure the font size is clear */
+            display: inline-block; /* Make sure it's displayed as a block-level button */
+        }
+
+        /* Hover state */
+        .btn-custom-green:hover {
+            background-color: #013b0f !important;
+            border-color: #013b0f !important;
+            color: #fff !important;
+        }
+
+        /* Style for input fields to have smaller font size */
+        input.form-control {
+            font-size: 14px; /* Set the desired font size */
+        }
+
+        input::placeholder {
+            font-size: 14px; /* Set the desired font size for placeholder text */
+        }
+    </style>
+
+    <!-- Favicon -->
+    <href href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAIAAAAn5KxJAAAB90lEQVR4Xu2WL5LqQBCHc4anOADuGRw3wEThUBwBj8WiOAEaTRUKhcJhsThMFHIF+1W6NtX5ZXYSXj3Zn9ja7e7p6el/m6IIgiAIgiAIgiAI/oXD4VD1YZan00kVbR6PB2a3200VbfDTimAI+/3+3UdVB4p3VXS43+9YqjTFdrvVUPK8Xi/10eF6vRbDrj8ej6PRSKUpSJCGkkcdpKA3ptOpSlOQp+VyqdIUq9VKQ8kgTvlzPB7/7fCnZjKZqKINBpiRUVXUHvxFgLFGk4EE+MOq/n90C6IWeWgpf/jrF7A8n88ZA2DeqUZRj3xj+f4pMT/9Rc/nUyLpgSH155MwbVjiWhUdeAyWFl+DRS+7xabzA4aMPBkqhj3JAvWSr7oacLlcvJzp9GH04w8TtO7lqkJoe4QmI1ZVV5X3sNvtZrOZl9j+B37x8vV63Yojz3w+94fLslSLPiir98DS2Gw2XkIizdILgfe0PWURp4vFouzAY2wxqaIsuYwUeg9YUlMvsWpw3Avfn468OP2NotNhSawdbeQbbORlW1c/Xw5DEadJbOSlw5LYxpHppLMRSuJtOnmDafuRJZrEPjJk4ySx+RChXWQ7uIFKEiXhfvBdwgfRPYs1GRlVhYMrrcRkyFs2y9LfggHGtD6eP/t3HwRBEARBEARBEBTfV+3HuM2j6SwAAAAASUVORK5CYII=" rel="icon">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- SEO Optimized Meta Description -->
+        <meta name="description"
+              content="esn bietet Sport Supplement made in Gernmany.">
+        <meta name="keywords"
+              content="esn, Fitness, Sport, Muskeln, Deutschland">
+
+</head>
+
+<body>
+
+<form action="/index" method="post">
+
+    <!-- Free-floating logo -->
+    <a href="index.html">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAIAAAAn5KxJAAAB90lEQVR4Xu2WL5LqQBCHc4anOADuGRw3wEThUBwBj8WiOAEaTRUKhcJhsThMFHIF+1W6NtX5ZXYSXj3Zn9ja7e7p6el/m6IIgiAIgiAIgiAI/oXD4VD1YZan00kVbR6PB2a3200VbfDTimAI+/3+3UdVB4p3VXS43+9YqjTFdrvVUPK8Xi/10eF6vRbDrj8ej6PRSKUpSJCGkkcdpKA3ptOpSlOQp+VyqdIUq9VKQ8kgTvlzPB7/7fCnZjKZqKINBpiRUVXUHvxFgLFGk4EE+MOq/n90C6IWeWgpf/jrF7A8n88ZA2DeqUZRj3xj+f4pMT/9Rc/nUyLpgSH155MwbVjiWhUdeAyWFl+DRS+7xabzA4aMPBkqhj3JAvWSr7oacLlcvJzp9GH04w8TtO7lqkJoe4QmI1ZVV5X3sNvtZrOZl9j+B37x8vV63Yojz3w+94fLslSLPiir98DS2Gw2XkIizdILgfe0PWURp4vFouzAY2wxqaIsuYwUeg9YUlMvsWpw3Avfn468OP2NotNhSawdbeQbbORlW1c/Xw5DEadJbOSlw5LYxpHppLMRSuJtOnmDafuRJZrEPjJk4ySx+RChXWQ7uIFKEiXhfvBdwgfRPYs1GRlVhYMrrcRkyFs2y9LfggHGtD6eP/t3HwRBEARBEARBEBTfV+3HuM2j6SwAAAAASUVORK5CYII=" alt="esn Logo" id="logo-img" class="img-fluid">
+    </a>
+
+    <!-- Navigation bar -->
+    <nav id="navbar" class="navbar navbar-expand-lg custom-navbar w-100 navbar-dark bg-gradient">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Navigation umschalten">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse custom-navbar-content" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="index.html">Startseite</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="onlineshop.html">Onlineshop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="b2b.html">B2B</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link hover-effect" href="bestellungen.html">Bestellungen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active hover-effect" href="index.html"><i class="bi bi-person"></i> Anmelden</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Formulare Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <!-- index Formular -->
+                <div id="index-form" class="col-md-6 col-lg-5">
+                    <h3 class="mb-4 text-center">Anmeldung</h3>
+                    <form action="/index" method="post">
+                        <!-- Benutzername -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="index-username">Benutzername</label>
+                            <input type="text" id="index-username" name="username" class="form-control form-control-lg"
+                                   placeholder="Geben Sie Ihren Benutzernamen ein" required/>
+                        </div>
+
+                        <!-- Passwort -->
+                        <div class="form-outline mb-3">
+                            <label class="form-label" for="index-password">Passwort</label>
+                            <input type="password" id="index-password" name="password"
+                                   class="form-control form-control-lg" placeholder="Geben Sie Ihr Passwort ein"
+                                   required/>
+                        </div>
+
+                        <!-- Angemeldet bleiben und Passwort vergessen -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <!-- Checkbox -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="rememberMe"/>
+                                <label class="form-check-label" for="rememberMe">
+                                    Angemeldet bleiben
+                                </label>
+                            </div>
+                            <a href="#" id="show-forgot-password-form" class="text-body">Passwort vergessen?</a>
+                        </div>
+
+                        <!-- Anmelden Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-block btn-custom-green">Anmelden</button>
+                        </div>
+
+                        <!-- Registrieren Link -->
+                        <p class="text-center text-muted mt-4 mb-0">Noch kein Konto? <a href="#" id="show-register-form"
+                                                                                        class="fw-bold text-body"><u>Jetzt
+                            registrieren</u></a></p>
+                    </form>
+                </div>
+
+                <!-- Display Lambda Response -->
+                <div id="lambda-response" class="col-md-6 col-lg-5"></div>
+
+
+                <!-- Registration Form -->
+                <div id="register-form" class="col-md-6 col-lg-5" style="display: none;">
+                    <h3 class="mb-4 text-center">Registrierung</h3>
+                    <form action="/register" method="post">
+                        <!-- Benutzername -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="register-username">Benutzername</label>
+                            <input type="text" id="register-username" name="username"
+                                   class="form-control form-control-lg" placeholder="Wählen Sie einen Benutzernamen"
+                                   required/>
+                        </div>
+
+                        <!-- E-Mail -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="register-email">E-Mail</label>
+                            <input type="email" id="register-email" name="email" class="form-control form-control-lg"
+                                   placeholder="Geben Sie Ihre E-Mail-Adresse ein" required/>
+                        </div>
+
+                        <!-- Passwort -->
+                        <div class="form-outline mb-3">
+                            <label class="form-label" for="register-password">Passwort</label>
+                            <input type="password" id="register-password" name="password"
+                                   class="form-control form-control-lg" placeholder="Erstellen Sie ein Passwort"
+                                   required/>
+
+                            <!-- Password toggle checkbox -->
+                            <div class="form-check mt-2">
+                                <input type="checkbox" class="form-check-input" id="show-password">
+                                <label class="form-check-label" for="show-password">Passwort anzeigen</label>
+                            </div>
+
+                            <!-- Password requirements -->
+                            <small id="password-help" class="form-text text-muted">
+                                Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, eine Zahl und ein
+                                Sonderzeichen enthalten.
+                            </small>
+                        </div>
+
+                        <!-- Passwort bestätigen -->
+                        <div class="form-outline mb-3">
+                            <label class="form-label" for="confirm-password">Passwort bestätigen</label>
+                            <input type="password" id="confirm-password" name="confirm_password"
+                                   class="form-control form-control-lg" placeholder="Passwort bestätigen" required/>
+                        </div>
+
+                        <!-- Error message for invalid password -->
+                        <div id="password-error" style="color:red; display:none;">
+                            Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, eine Zahl und ein Sonderzeichen
+                            enthalten.
+                        </div>
+
+                        <!-- Registrieren Button -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-block btn-custom-green">Registrieren</button>
+                        </div>
+
+                        <!-- Anmelden Link -->
+                        <p class="text-center text-muted mt-4 mb-0">Bereits ein Konto? <a href="#" id="show-index-form"
+                                                                                          class="fw-bold text-body"><u>Jetzt
+                            anmelden</u></a></p>
+                    </form>
+                </div>
+
+
+                <!-- Forgot Password Form -->
+                <div id="forgot-password-form" class="col-md-6 col-lg-5" style="display: none;">
+                    <h3 class="mb-4 text-center">Passwort vergessen</h3>
+                    <form action="/forgot-password" method="post">
+                        <!-- E-Mail -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="forgot-email">E-Mail</label>
+                            <input type="email" id="forgot-email" name="email" class="form-control form-control-lg"
+                                   placeholder="Geben Sie Ihre E-Mail-Adresse ein" required/>
+                        </div>
+
+                        <!-- Telefonnummer (optional) -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="forgot-phone">Telefonnummer (optional)</label>
+                            <input type="tel" id="forgot-phone" name="phone" class="form-control form-control-lg"
+                                   placeholder="Geben Sie Ihre Telefonnummer ein"/>
+                        </div>
+
+                        <!-- Zurück zum index -->
+                        <div class="text-center mb-3">
+                            <button type="submit" class="btn btn-lg btn-block btn-custom-green">Passwort
+                                zurücksetzen
+                            </button>
+                        </div>
+
+                        <p class="text-center text-muted mt-4 mb-0">Zurück zum <a href="#"
+                                                                                  id="show-index-form-from-forgot"
+                                                                                  class="fw-bold text-body"><u>Anmeldung</u></a>
+                        </p>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Formulare Ende -->
+
+
+    <!-- Back to Top -->
+    <a id="up-button" href="#" class="btn btn-lg btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
+
+    <!-- Bootstrap JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+    <!-- Page-specific code -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        // Back to Top Button
+        const upButton = document.getElementById("up-button");
+        if (upButton) {
+            window.onscroll = function () {
+                if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                    upButton.style.display = "block";
+                } else {
+                    upButton.style.display = "none";
+                }
+            };
+
+            upButton.addEventListener("click", function (event) {
+                event.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // Form Navigation
+        const showRegisterForm = document.getElementById('show-register-form');
+        const showindexForm = document.getElementById('show-index-form');
+        const showForgotPasswordForm = document.getElementById('show-forgot-password-form');
+        const showindexFormFromForgot = document.getElementById('show-index-form-from-forgot');
+
+        if (showRegisterForm) {
+            showRegisterForm.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('index-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+                document.getElementById('forgot-password-form').style.display = 'none';
+            });
+        }
+
+        if (showindexForm) {
+            showindexForm.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('register-form').style.display = 'none';
+                document.getElementById('index-form').style.display = 'block';
+                document.getElementById('forgot-password-form').style.display = 'none';
+            });
+        }
+
+        if (showForgotPasswordForm) {
+            showForgotPasswordForm.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('index-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'none';
+                document.getElementById('forgot-password-form').style.display = 'block';
+            });
+        }
+
+        if (showindexFormFromForgot) {
+            showindexFormFromForgot.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('forgot-password-form').style.display = 'none';
+                document.getElementById('index-form').style.display = 'block';
+                document.getElementById('register-form').style.display = 'none';
+            });
+        }
+
+        // Toggle Password Visibility
+        const showPasswordCheckbox = document.getElementById('show-password');
+        if (showPasswordCheckbox) {
+            showPasswordCheckbox.addEventListener('change', function () {
+                const passwordField = document.getElementById('register-password');
+                const confirmPasswordField = document.getElementById('confirm-password');
+                if (this.checked) {
+                    passwordField.type = 'text';
+                    confirmPasswordField.type = 'text';
+                } else {
+                    passwordField.type = 'password';
+                    confirmPasswordField.type = 'password';
+                }
+            });
+        }
+
+        // Password Validation
+        const registerForm = document.querySelector('#register-form form');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function (event) {
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const errorMessage = document.getElementById('password-error');
+
+                const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+                let valid = true;
+                let messages = [];
+
+                if (!passwordPattern.test(password)) {
+                    messages.push('Passwort muss mindestens 8 Zeichen, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.');
+                    valid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    messages.push('Passwörter stimmen nicht überein.');
+                    valid = false;
+                }
+
+                if (!valid) {
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerHTML = messages.join('<br>');
+                    event.preventDefault();
+                    return;
+                }
+
+                errorMessage.style.display = 'none';
+            });
+        }
+
+        // Handle index form submission to Lambda
+        const indexForm = document.getElementById('index-form')?.querySelector('form');
+        if (indexForm) {
+            indexForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const username = document.getElementById('index-username').value;
+                const password = document.getElementById('index-password').value;
+
+                const formData = new URLSearchParams();
+                formData.append("username", username);
+                formData.append("password", password);
+
+                fetch("https://esn-dev-lambda-alb-530528997.eu-central-1.elb.amazonaws.com/index", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById("lambda-response");
+                    container.innerHTML = `
+                        <div class="alert alert-success mt-3">
+                            <strong>Lambda Response:</strong><br>
+                            Benutzername: <code>${data.username}</code><br>
+                            Passwort: <code>${data.password}</code>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    const container = document.getElementById("lambda-response");
+                    container.innerHTML = `
+                        <div class="alert alert-danger mt-3">
+                            Fehler beim Senden an Lambda: ${error}
+                        </div>
+                    `;
+                });
+            });
+        }
+
+        // Handle Forgot Password Form Submission (optional - just capturing input here)
+        const forgotPasswordForm = document.getElementById('forgot-password-form')?.querySelector('form');
+        if (forgotPasswordForm) {
+            forgotPasswordForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const email = document.getElementById('forgot-email').value;
+                const phone = document.getElementById('forgot-phone').value;
+
+                console.log("Forgot password submitted with email:", email, "and phone:", phone);
+            });
+        }
+    });
+
+    </script>
+
+</body>
+
+</html>

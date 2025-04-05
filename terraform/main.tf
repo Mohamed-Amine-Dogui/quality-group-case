@@ -78,3 +78,25 @@ module "generic_labels" {
 }
 
 
+resource "aws_s3_bucket_notification" "terraform_state_bucket_notification" {
+  bucket = module.source_terraform_state_bucket.s3_bucket
+
+  lambda_function {
+    lambda_function_arn = module.my_lambda.aws_lambda_function_arn
+    events              = ["s3:ObjectCreated:*"]
+    filter_prefix       = "incoming/"
+    filter_suffix       = ".tfstate"
+  }
+
+  depends_on = [aws_lambda_permission.allow_s3_to_invoke_lambda]
+}
+
+resource "aws_lambda_permission" "allow_s3_to_invoke_lambda" {
+  statement_id  = "AllowS3Invoke"
+  action        = "lambda:InvokeFunction"
+  function_name = module.my_lambda.aws_lambda_function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = module.source_terraform_state_bucket.s3_arn
+}
+
+

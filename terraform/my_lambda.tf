@@ -3,8 +3,7 @@
 ########################################################################################################################
 module "my_lambda" {
 
-  source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-lambda-vpc.git?ref=tags/0.0.1"
-
+  source = "./modules/tf-module-aws-lambda"
   enable = true
   depends_on = [
     module.kms_key,
@@ -31,9 +30,12 @@ module "my_lambda" {
   logs_kms_key_arn = module.kms_key.kms_key_arn
 
   lambda_env_vars = {
-    stage  = var.stage
-    REGION = var.aws_region
+    SOURCE_BUCKET       = module.source_terraform_state_bucket.s3_bucket
+    TARGET_BUCKET       = module.target_terraform_state_bucket.s3_bucket
+    INPUT_PREFIX       = "incoming/"
+    OUTPUT_PREFIX      = "sanitized/"
   }
+
 
   tags_lambda = {
     GitRepository = var.git_repository
@@ -66,6 +68,10 @@ data "aws_iam_policy_document" "my_lambda_policy" {
     resources = [
       "${module.lambda_scripts_bucket.s3_arn}",
       "${module.lambda_scripts_bucket.s3_arn}/*",
+      "${module.source_terraform_state_bucket.s3_arn}",
+      "${module.source_terraform_state_bucket.s3_arn}/*",
+      "${module.target_terraform_state_bucket.s3_arn}",
+      "${module.target_terraform_state_bucket.s3_arn}/*",
     ]
   }
 
@@ -82,7 +88,9 @@ data "aws_iam_policy_document" "my_lambda_policy" {
     ]
     resources = [
       "${module.kms_key.kms_key_arn}",
-      "${module.lambda_scripts_bucket.aws_kms_key_arn}"
+      "${module.lambda_scripts_bucket.aws_kms_key_arn}",
+      "${module.source_terraform_state_bucket.aws_kms_key_arn}",
+      "${module.target_terraform_state_bucket.aws_kms_key_arn}"
     ]
   }
 

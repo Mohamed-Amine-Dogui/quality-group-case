@@ -3,7 +3,7 @@
 ###  KMS Key
 ########################################################################################################################
 module "kms_key" {
-  source = "git::ssh://git@github.com/Mohamed-Amine-Dogui/tf-module-aws-kms-key.git?ref=tags/0.0.1"
+  source = "./modules/tf-module-aws-kms-key"
 
   enable = true
 

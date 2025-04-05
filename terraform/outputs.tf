@@ -8,7 +8,12 @@ output "aws_lambda_function_arn" {
   value       = module.my_lambda.aws_lambda_function_arn
 }
 
-output "alb_url" {
-  description = "Full URL of the ALB"
-  value       = "http://${module.alb_lambda.dns_name}"
+output "source_terraform_state_bucket" {
+  description = "source_terraform_state_bucket"
+  value       = module.source_terraform_state_bucket.s3_bucket
+}
+
+output "target_terraform_state_bucket" {
+  description = "target_terraform_state_bucket"
+  value       = module.target_terraform_state_bucket.s3_bucket
 }
